@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { MessageCircle, Sparkles, Mic, Send } from "lucide-react";
 import { ChatInterface } from "@/components/chat/ChatInterface";
+import { ThemeToggle } from "@/components/ui/theme-toggle";
 
 const Index = () => {
   const [isChatOpen, setIsChatOpen] = useState(false);
@@ -14,9 +15,7 @@ const Index = () => {
         <header className="p-4 border-b border-border">
           <div className="flex items-center justify-between max-w-md mx-auto">
             <h1 className="text-lg font-semibold text-foreground">Mini App Demo</h1>
-            <Button variant="ghost" size="icon" className="hover:bg-muted">
-              <div className="w-5 h-5 rounded-full border border-muted-foreground" />
-            </Button>
+            <ThemeToggle />
           </div>
         </header>
 
