@@ -1,6 +1,4 @@
 import { cn } from "@/lib/utils";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Bot, User } from "lucide-react";
 
 export interface Message {
   id: string;
@@ -21,45 +19,25 @@ export const ChatMessage = ({ message }: ChatMessageProps) => {
   return (
     <div
       className={cn(
-        "flex gap-3 animate-fade-in",
-        isUser ? "flex-row-reverse" : "flex-row"
+        "flex animate-fade-in mb-4",
+        isUser ? "justify-end" : "justify-start"
       )}
     >
-      <Avatar className={cn("w-8 h-8 border-2", isUser ? "border-primary/20" : "border-muted")}>
-        <AvatarFallback className={cn(isUser ? "bg-primary text-primary-foreground" : "bg-muted")}>
-          {isUser ? <User className="w-4 h-4" /> : <Bot className="w-4 h-4" />}
-        </AvatarFallback>
-      </Avatar>
-      
       <div
         className={cn(
-          "flex flex-col max-w-[80%]",
-          isUser ? "items-end" : "items-start"
+          "max-w-[75%] px-4 py-2 rounded-2xl",
+          isUser
+            ? "bg-primary text-primary-foreground rounded-br-md"
+            : "bg-muted text-foreground rounded-bl-md"
         )}
       >
-        <div
-          className={cn(
-            "px-4 py-3 rounded-2xl shadow-card transition-all duration-200 hover:shadow-lg",
-            isUser
-              ? "bg-chat-user-bg text-chat-user-fg rounded-br-md"
-              : "bg-chat-system-bg text-chat-system-fg rounded-bl-md"
-          )}
-        >
-          {message.type === "card" ? (
-            <CustomCard data={message.cardData} />
-          ) : (
-            <p className="text-sm leading-relaxed whitespace-pre-wrap">
-              {message.content}
-            </p>
-          )}
-        </div>
-        
-        <span className="text-xs text-muted-foreground mt-1 px-1">
-          {message.timestamp.toLocaleTimeString([], {
-            hour: '2-digit',
-            minute: '2-digit'
-          })}
-        </span>
+        {message.type === "card" ? (
+          <CustomCard data={message.cardData} />
+        ) : (
+          <p className="text-sm leading-relaxed whitespace-pre-wrap">
+            {message.content}
+          </p>
+        )}
       </div>
     </div>
   );
