@@ -108,58 +108,58 @@ export const ChatInterface = ({ isOpen, onClose }: ChatInterfaceProps) => {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50">
-      {/* 背景蒙层 */}
-      <div 
-        className="absolute inset-0 bg-black/20 backdrop-blur-sm animate-fade-in"
-        onClick={onClose}
-      />
-      
-      {/* 浮层内容 */}
-      <div className="absolute bottom-0 left-0 right-0 h-[70vh] max-w-md mx-auto bg-background rounded-t-2xl shadow-chat animate-slide-up">
-        <div className="flex flex-col h-full">
-          {/* Header */}
-          <div className="flex items-center justify-between p-4 border-b border-border">
-            {/* 顶部拖拽条 */}
-            <div className="absolute top-2 left-1/2 transform -translate-x-1/2 w-10 h-1 bg-muted-foreground/30 rounded-full" />
-            
-            <div className="flex items-center gap-3 mt-2">
-              <div>
-                <h2 className="font-semibold text-foreground">AI 助手</h2>
-              </div>
-            </div>
-            
-            <div className="flex items-center gap-2 mt-2">
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={handleGetRecommendations}
-                className="text-sm text-muted-foreground hover:text-foreground"
-              >
-                推荐
-              </Button>
-              <Button
-                variant="ghost"
-                size="icon"
-                onClick={onClose}
-                className="hover:bg-muted"
-              >
-                <MoreVertical className="h-4 w-4" />
-              </Button>
+    <div className="fixed inset-0 bg-background/80 backdrop-blur-sm z-50 animate-fade-in">
+      <div className="flex flex-col h-full max-w-md mx-auto bg-background shadow-chat animate-slide-up">
+        {/* Header */}
+        <div className="flex items-center justify-between p-4 border-b border-border bg-gradient-surface">
+          <div className="flex items-center gap-3">
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={onClose}
+              className="hover:bg-muted"
+            >
+              <ArrowLeft className="h-5 w-5" />
+            </Button>
+            <div>
+              <h2 className="font-semibold text-foreground">AI 助手</h2>
+              <p className="text-sm text-muted-foreground">在线</p>
             </div>
           </div>
+          
+          <div className="flex items-center gap-2">
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={handleGetRecommendations}
+              className="text-xs hover:bg-primary hover:text-primary-foreground transition-colors"
+            >
+              给我一些内容推荐
+            </Button>
+            <Button
+              variant="ghost"
+              size="icon"
+              className="hover:bg-muted"
+            >
+              <MoreVertical className="h-4 w-4" />
+            </Button>
+          </div>
+        </div>
 
-          {/* Messages */}
-          <ScrollArea ref={scrollAreaRef} className="flex-1 p-4">
-            <div className="space-y-2">
+        {/* Messages */}
+        <ScrollArea ref={scrollAreaRef} className="flex-1 p-4">
+          <div className="space-y-6">
             {messages.map((message) => (
               <ChatMessage key={message.id} message={message} />
             ))}
             
             {/* Typing indicator */}
             {isTyping && (
-              <div className="flex justify-start mb-4">
-                <div className="bg-muted px-4 py-2 rounded-2xl rounded-bl-md">
+              <div className="flex gap-3">
+                <div className="w-8 h-8 rounded-full bg-muted border-2 border-muted flex items-center justify-center">
+                  <div className="w-4 h-4 bg-primary/60 rounded-full animate-pulse" />
+                </div>
+                <div className="bg-chat-system-bg px-4 py-3 rounded-2xl rounded-bl-md shadow-card">
                   <div className="flex space-x-1">
                     <div className="w-2 h-2 bg-muted-foreground/60 rounded-full animate-bounce"></div>
                     <div className="w-2 h-2 bg-muted-foreground/60 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
@@ -168,15 +168,14 @@ export const ChatInterface = ({ isOpen, onClose }: ChatInterfaceProps) => {
                 </div>
               </div>
             )}
-            </div>
-          </ScrollArea>
+          </div>
+        </ScrollArea>
 
-          {/* Input */}
-          <ChatInput
-            onSendMessage={handleSendMessage}
-            disabled={isTyping}
-          />
-        </div>
+        {/* Input */}
+        <ChatInput
+          onSendMessage={handleSendMessage}
+          disabled={isTyping}
+        />
       </div>
     </div>
   );
