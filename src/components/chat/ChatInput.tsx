@@ -3,15 +3,13 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Mic, Send, X } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { useToast } from "@/hooks/use-toast";
 
 interface ChatInputProps {
   onSendMessage: (content: string, type: "text" | "voice") => void;
   disabled?: boolean;
-  voiceDisabled?: boolean;
 }
 
-export const ChatInput = ({ onSendMessage, disabled, voiceDisabled = false }: ChatInputProps) => {
+export const ChatInput = ({ onSendMessage, disabled }: ChatInputProps) => {
   const [message, setMessage] = useState("");
   const [isVoiceMode, setIsVoiceMode] = useState(false);
   const [isRecording, setIsRecording] = useState(false);
@@ -19,7 +17,6 @@ export const ChatInput = ({ onSendMessage, disabled, voiceDisabled = false }: Ch
   
   const mediaRecorder = useRef<MediaRecorder | null>(null);
   const recordingInterval = useRef<NodeJS.Timeout | null>(null);
-  const { toast } = useToast();
 
   const handleSendText = () => {
     if (message.trim() && !disabled) {
@@ -36,14 +33,6 @@ export const ChatInput = ({ onSendMessage, disabled, voiceDisabled = false }: Ch
   };
 
   const toggleVoiceMode = () => {
-    if (voiceDisabled) {
-      toast({
-        description: "加急开发中，敬请期待！",
-        duration: 2000,
-      });
-      return;
-    }
-    
     setIsVoiceMode(!isVoiceMode);
     setMessage("");
   };
@@ -157,10 +146,7 @@ export const ChatInput = ({ onSendMessage, disabled, voiceDisabled = false }: Ch
               variant="ghost"
               size="icon"
               onClick={toggleVoiceMode}
-              className={cn(
-                "text-muted-foreground hover:text-foreground",
-                voiceDisabled && "opacity-50 cursor-not-allowed"
-              )}
+              className="text-muted-foreground hover:text-foreground"
             >
               <Mic className="h-5 w-5" />
             </Button>

@@ -175,7 +175,6 @@ export const ChatInterface = ({ isOpen, onClose }: ChatInterfaceProps) => {
           <ChatInput
             onSendMessage={handleSendMessage}
             disabled={isTyping}
-            voiceDisabled={true}
           />
         </div>
       </div>
